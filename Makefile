@@ -1,7 +1,26 @@
-.PHONY: all stages-0-4 stage0 stage1 stage2 stage3 stage4 stage5 stage6 stage7 stage8 stage9 stage10 stage11 stage12 stage13 stage14 stage15 clean docker-build docker-run ouroboros docker-ouroboros test-suite docker-test-suite
+.PHONY: all stages-0-4 stage0 stage1 stage2 stage3 stage4 stage5 stage6 stage7 stage8 stage9 stage10 stage11 stage12 stage13 stage14 stage15 clean docker-build docker-run ouroboros docker-ouroboros test-suite docker-test-suite example docker-example
 
 IMAGE_NAME ?= ouroboros-html:latest
 CYCLES ?= 3
+
+example:
+	@echo "=========================================================="
+	@echo " [OUROBOROS-HTML] COMPILING EXAMPLE APP (example/index.html)"
+	@echo "=========================================================="
+	mkdir -p example/dist
+	cp example/index.html stages/00_input/input.html
+	$(MAKE) clean
+	$(MAKE) all
+	cp stages/15_assertion/output.html example/dist/index.html
+	cp fixtures/01_canonical.html stages/00_input/input.html
+	@echo ""
+	@echo "=========================================================="
+	@echo " [OUROBOROS-HTML] EXAMPLE COMPILED -> example/dist/index.html"
+	@echo " Payload: $$(cat example/dist/index.html)"
+	@echo "=========================================================="
+
+docker-example:
+	docker run --rm -v "$$(pwd):/workspace" -w /workspace $(IMAGE_NAME) make example
 
 all: stage0 stage1 stage2 stage3 stage4 stage5 stage6 stage7 stage8 stage9 stage10 stage11 stage12 stage13 stage14 stage15
 	@echo "=========================================================="

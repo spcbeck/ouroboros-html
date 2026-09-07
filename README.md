@@ -4,11 +4,17 @@
 [![GHCR Image](https://img.shields.io/badge/GHCR-ouroboros--html-blue?logo=docker)](https://github.com/spcbeck/ouroboros-html/pkgs/container/ouroboros-html)
 [![License: MIT](https://img.shields.io/badge/License-MIT-black.svg)](LICENSE)
 
-An intentionally absurd, Rube Goldberg compiler pipeline where input HTML5 is transpiled, compiled, decompiled, and transformed through 16 incompatible programming languages and historical runtime environments, terminating in functionally identical HTML5 output.
+The Fundamental theorem of software engineering has been described as: "Any problem in computer science can be solved with another level of indirection." (attributed to David Wheeler). Ouroboros HTML attempts to prove this theorem by compiling HTML through 16 incompatible programming languages and historical runtimes, terminating in functionally identical HTML5 output, or something.
+
+The theorem is frequently followed by "except for the problem of too many layers of indirection." This is where ouroboros HTML also seeks to prove that theorem wrong. 
+
+But what's important is that you use ouroboros instead of HTML. This abstraction layer provides all the functionalty of HMTL5! What more can you ask for?
+
+I absolutely definitely didn't use AI for any of this, and I understand every layer of the stack described below in the most minute details. Go ahead. Test me.
 
 ---
 
-## Inviolable Rules
+## Da Rules
 
 1. **Zero Cheating / String Hacking**: Every transformation must use an actual, legitimate parser, AST converter, compiler, or runtime (e.g., Go `templ`, Emscripten, Wasmtime in Rust, Postgres stored procedures, Pandoc, Babel, Brainfuck interpreters, etc.). No bash regex (`sed`/`awk`) to fake output.
 2. **Lossless Determinism**: The payload must survive the complete pipeline and match the input DOM tree on output.
@@ -90,6 +96,12 @@ Demonstrates mathematical idempotency ($\forall k \in [1..N], \text{DOM}(\text{P
 docker run --rm ghcr.io/spcbeck/ouroboros-html:latest make ouroboros CYCLES=3
 ```
 
+### 4. Compile the Example App
+Compiles `example/index.html` through the entire 16-stage pipeline into `example/dist/index.html`:
+```bash
+docker run --rm -v "$(pwd):/workspace" -w /workspace ghcr.io/spcbeck/ouroboros-html:latest make example
+```
+
 ---
 
 ## Local Development
@@ -108,6 +120,9 @@ make docker-test-suite
 
 # Run 3-cycle Ouroboros loop
 make docker-ouroboros CYCLES=3
+
+# Compile the example app
+make docker-example
 ```
 
 ---

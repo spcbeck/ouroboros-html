@@ -40,6 +40,7 @@ stages/*/*.html
 !stages/00_input/input.html
 stages/*/*.xhtml
 artifacts/
+example/dist/
 
 # OS metadata
 .DS_Store

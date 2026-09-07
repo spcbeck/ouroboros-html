@@ -1,6 +1,6 @@
 {
   "name": "ouroboros-html",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "An intentionally absurd, Rube Goldberg compiler pipeline for HTML5",
   "private": true,
   "dependencies": {
