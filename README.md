@@ -1,5 +1,8 @@
 # ouroboros-html
 
+[![CI](https://github.com/spcbeck/ouroboros-html/actions/workflows/ci.yml/badge.svg)](https://github.com/spcbeck/ouroboros-html/actions/workflows/ci.yml)
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
+
 An intentionally absurd, Rube Goldberg compiler pipeline where input HTML5 is transpiled, compiled, decompiled, and transformed through incompatible programming languages and historical runtime environments, terminating in functionally identical HTML5 output.
 
 ---

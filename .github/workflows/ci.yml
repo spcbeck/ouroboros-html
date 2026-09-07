@@ -1,0 +1,36 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  ouroboros-pipeline:
+    name: Build & Verify 16 Stages + Ouroboros Loop
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Build multi-runtime Docker image
+        run: |
+          docker build -t ouroboros-html:latest -f Dockerfile .
+
+      - name: Run all 16 compiler stages (Stages 0-15)
+        run: |
+          docker run --rm -v "${{ github.workspace }}:/workspace" -w /workspace ouroboros-html:latest make all
+
+      - name: Run recursive 2-cycle Ouroboros idempotency loop
+        run: |
+          docker run --rm -v "${{ github.workspace }}:/workspace" -w /workspace ouroboros-html:latest make ouroboros CYCLES=2
+
+      - name: Upload generational artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: ouroboros-generational-artifacts
+          path: artifacts/
+          if-no-files-found: ignore
