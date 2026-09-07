@@ -1,0 +1,19 @@
+{
+  "name": "ouroboros-html",
+  "version": "0.1.0",
+  "description": "An intentionally absurd, Rube Goldberg compiler pipeline for HTML5",
+  "private": true,
+  "dependencies": {
+    "@babel/core": "^7.26.0",
+    "@babel/generator": "^7.26.0",
+    "@babel/parser": "^7.26.0",
+    "@babel/traverse": "^7.26.0",
+    "@babel/types": "^7.26.0",
+    "htmx.org": "^2.0.0",
+    "jsdom": "^25.0.0",
+    "posthtml": "^0.16.6",
+    "posthtml-parser": "^0.4.2",
+    "posthtml-render": "^3.0.0",
+    "pug": "^3.0.3"
+  }
+}

@@ -70,11 +70,13 @@ RUN git clone --depth 1 https://github.com/emscripten-core/emsdk.git /opt/emsdk 
     ./emsdk activate 3.1.64
 
 ENV EMSDK="/opt/emsdk"
-ENV PATH="/opt/emsdk:/opt/emsdk/upstream/emscripten:${PATH}"
+ENV PATH="/opt/emsdk/upstream/emscripten:${PATH}"
 
 # Initialize emscripten cache
 RUN emcc --version
 
+ENV NODE_PATH="/workspace/node_modules"
+
 WORKDIR /workspace
 
-CMD ["make", "stages-0-4"]
+CMD ["make", "all"]

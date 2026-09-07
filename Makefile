@@ -83,7 +83,7 @@ docker-build:
 	docker build -t $(IMAGE_NAME) -f Dockerfile .
 
 docker-run:
-	docker run --rm -v "$$(pwd):/workspace" -w /workspace $(IMAGE_NAME) make stages-0-4
+	docker run --rm -v "$$(pwd):/workspace" -w /workspace $(IMAGE_NAME) make all
 
 clean:
 	$(MAKE) -C stages/00_input clean

@@ -25,6 +25,20 @@ stages/03_emcc_wasm/wrapper.c
 stages/03_emcc_wasm/stage3.wasm
 stages/04_rust_wasmtime/stage3.wasm
 stages/04_rust_wasmtime/output.txt
+stages/*/*.bf
+stages/*/*.js
+!stages/*/transform.js
+!stages/*/jsx_to_xml.js
+!stages/*/harness.js
+!stages/*/serialize.js
+!stages/*/minify.js
+stages/*/*.jsx
+stages/*/*.xml
+stages/*/*.tex
+stages/*/*.pug
+stages/*/*.html
+!stages/00_input/input.html
+stages/*/*.xhtml
 
 # OS metadata
 .DS_Store

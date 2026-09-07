@@ -67,8 +67,7 @@ An intentionally absurd, Rube Goldberg compiler pipeline where input HTML5 is tr
 
 ## Current Status
 
-- **Stages 0–4**: Implemented and verified end-to-end.
-- **Stages 5–15**: Makefile scaffolding in place.
+- **Stages 0–15**: Fully implemented, connected, and verified end-to-end with deep DOM assertion.
 
 ---
 

@@ -1,7 +1,15 @@
 .PHONY: all clean
 
-all:
-	@echo "[Stage 10] Pandoc LaTeX to DocBook XML converter skeleton (Ready for next phase)"
+all: output.xml
+	mkdir -p ../11_xslt_pug
+	cp output.xml ../11_xslt_pug/output.xml
+	@echo "[Stage 10] Pandoc converted LaTeX -> DocBook XML (output.xml)"
+
+output.tex: ../09_postgres_plpgsql/output.tex
+	cp ../09_postgres_plpgsql/output.tex output.tex
+
+output.xml: output.tex
+	pandoc -f latex -t docbook -s output.tex -o output.xml
 
 clean:
-	@rm -f *.xml
+	rm -f output.xml output.tex
