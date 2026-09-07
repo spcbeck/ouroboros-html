@@ -6,5 +6,6 @@ IMAGE_NAME="ouroboros-html:latest"
 echo "=== Building Docker image ${IMAGE_NAME} ==="
 docker build -t "${IMAGE_NAME}" -f Dockerfile .
 
-echo "=== Running full ouroboros-html pipeline (Stages 0-15) inside Docker ==="
-docker run --rm -v "$(pwd):/workspace" -w /workspace "${IMAGE_NAME}" make all
+TARGET="${*:-all}"
+echo "=== Running target '${TARGET}' inside Docker ==="
+docker run --rm -v "$(pwd):/workspace" -w /workspace "${IMAGE_NAME}" make ${TARGET}

@@ -76,20 +76,19 @@ An intentionally absurd, Rube Goldberg compiler pipeline where input HTML5 is tr
 ### Prerequisites
 - Docker (recommended for reproducible multi-runtime toolchains: Go, Rust, Emscripten, Node, Postgres, Pandoc, beef)
 
-### Run via Docker
+### Run Multi-Generation Ouroboros Loop (via Docker)
+To prove recursive mathematical idempotency, feed the output of Stage 14 back into Stage 0 for $N$ generations:
 ```bash
-./docker/run.sh
-```
-
-Or manually:
-```bash
-make docker-build
-make docker-run
+./docker/run.sh ouroboros CYCLES=3
 ```
 
 ### Run Locally (if toolchains installed)
 ```bash
-make stages-0-4
+# Run all 16 stages once:
+make all
+
+# Run recursive multi-generation cycles:
+make ouroboros CYCLES=3
 ```
 
 ---

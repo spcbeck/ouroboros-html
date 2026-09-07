@@ -1,11 +1,18 @@
-.PHONY: all stages-0-4 stage0 stage1 stage2 stage3 stage4 stage5 stage6 stage7 stage8 stage9 stage10 stage11 stage12 stage13 stage14 stage15 clean docker-build docker-run
+.PHONY: all stages-0-4 stage0 stage1 stage2 stage3 stage4 stage5 stage6 stage7 stage8 stage9 stage10 stage11 stage12 stage13 stage14 stage15 clean docker-build docker-run ouroboros docker-ouroboros
 
 IMAGE_NAME ?= ouroboros-html:latest
+CYCLES ?= 3
 
 all: stage0 stage1 stage2 stage3 stage4 stage5 stage6 stage7 stage8 stage9 stage10 stage11 stage12 stage13 stage14 stage15
 	@echo "=========================================================="
 	@echo " ALL STAGES (0-15) EXECUTED"
 	@echo "=========================================================="
+
+ouroboros:
+	python3 scripts/ouroboros_cycle.py --cycles $(CYCLES)
+
+docker-ouroboros:
+	docker run --rm -v "$$(pwd):/workspace" -w /workspace $(IMAGE_NAME) make ouroboros CYCLES=$(CYCLES)
 
 stages-0-4: stage0 stage1 stage2 stage3 stage4
 	@echo ""

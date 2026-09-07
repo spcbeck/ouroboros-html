@@ -39,6 +39,7 @@ stages/*/*.pug
 stages/*/*.html
 !stages/00_input/input.html
 stages/*/*.xhtml
+artifacts/
 
 # OS metadata
 .DS_Store
