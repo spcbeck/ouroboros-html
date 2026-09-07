@@ -75,8 +75,21 @@ ENV PATH="/opt/emsdk/upstream/emscripten:${PATH}"
 # Initialize emscripten cache
 RUN emcc --version
 
-ENV NODE_PATH="/workspace/node_modules"
+# Pre-install Node.js dependencies into system location to ensure
+# modules resolve reliably even when /workspace is mounted without node_modules
+WORKDIR /opt/node_app
+COPY package.json package-lock.json /opt/node_app/
+RUN npm ci
 
+ENV NODE_PATH="/opt/node_app/node_modules:/workspace/node_modules"
+
+# Embed complete repository sources into image
 WORKDIR /workspace
+COPY . /workspace
+
+# Pre-fetch Go and Rust toolchain packages for offline self-containment
+RUN cd stages/01_go_templ && go mod download
+RUN cd stages/02_go_carchive && go mod download
+RUN cd stages/04_rust_wasmtime && cargo fetch
 
 CMD ["make", "all"]

@@ -33,10 +33,25 @@ BEGIN
         res := res || '\end{document}' || chr(10);
     ELSIF tag_name = 'h1' THEN
         child_text := (xpath('string(/*)', n))[1]::text;
-        res := '\section{' || child_text || '}' || chr(10);
+        res := '\section{' || child_text || '}' || chr(10) || chr(10);
     ELSIF tag_name = 'p' THEN
         child_text := (xpath('string(/*)', n))[1]::text;
-        res := child_text || chr(10);
+        res := child_text || chr(10) || chr(10);
+    ELSIF tag_name = 'ul' THEN
+        res := '\begin{itemize}' || chr(10);
+        FOREACH child_node IN ARRAY xpath('/*/*', n) LOOP
+            res := res || xml_node_to_latex(child_node);
+        END LOOP;
+        res := res || '\end{itemize}' || chr(10) || chr(10);
+    ELSIF tag_name = 'li' THEN
+        child_text := (xpath('string(/*)', n))[1]::text;
+        res := '\item ' || child_text || chr(10);
+    ELSIF tag_name = 'blockquote' THEN
+        res := '\begin{quote}' || chr(10);
+        FOREACH child_node IN ARRAY xpath('/*/*', n) LOOP
+            res := res || xml_node_to_latex(child_node);
+        END LOOP;
+        res := res || '\end{quote}' || chr(10) || chr(10);
     ELSE
         FOREACH child_node IN ARRAY xpath('/*/*', n) LOOP
             res := res || xml_node_to_latex(child_node);

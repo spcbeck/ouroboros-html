@@ -13,8 +13,22 @@ const t = require('@babel/types');
 function jsxToXml(node) {
   if (t.isJSXElement(node)) {
     const tagName = node.openingElement.name.name;
+    let attrs = '';
+    if (node.openingElement.attributes && node.openingElement.attributes.length > 0) {
+      attrs = ' ' + node.openingElement.attributes.map(attr => {
+        if (t.isJSXAttribute(attr)) {
+          const attrName = attr.name.name;
+          if (t.isStringLiteral(attr.value)) {
+            return `${attrName}="${attr.value.value}"`;
+          } else if (t.isJSXExpressionContainer(attr.value)) {
+            return `${attrName}="${attr.value.expression.value}"`;
+          }
+        }
+        return '';
+      }).filter(Boolean).join(' ');
+    }
     const children = node.children.map(jsxToXml).join('');
-    return `<${tagName}>${children}</${tagName}>`;
+    return `<${tagName}${attrs}>${children}</${tagName}>`;
   } else if (t.isJSXText(node)) {
     return node.value;
   }
