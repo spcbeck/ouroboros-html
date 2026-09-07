@@ -4,7 +4,7 @@
 [![GHCR Image](https://img.shields.io/badge/GHCR-ouroboros--html-blue?logo=docker)](https://github.com/spcbeck/ouroboros-html/pkgs/container/ouroboros-html)
 [![License: MIT](https://img.shields.io/badge/License-MIT-black.svg)](LICENSE)
 
-The Fundamental theorem of software engineering has been described as: "Any problem in computer science can be solved with another level of indirection." (attributed to David Wheeler). Ouroboros HTML attempts to prove this theorem by compiling HTML through 16 incompatible programming languages and historical runtimes, terminating in functionally identical HTML5 output, or something.
+The fundamental theorem of software engineering has been described as: "Any problem in computer science can be solved with another level of indirection." (attributed to David Wheeler). Ouroboros HTML attempts to prove this theorem by compiling HTML through 16 incompatible programming languages and historical runtimes, terminating in functionally identical HTML5 output, or something.
 
 The theorem is frequently followed by "except for the problem of too many layers of indirection." This is where ouroboros HTML also seeks to prove that theorem wrong. 
 
