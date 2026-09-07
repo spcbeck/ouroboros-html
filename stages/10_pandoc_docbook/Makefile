@@ -9,7 +9,7 @@ output.tex: ../09_postgres_plpgsql/output.tex
 	cp ../09_postgres_plpgsql/output.tex output.tex
 
 output.xml: output.tex
-	pandoc -f latex -t docbook -s output.tex -o output.xml
+	pandoc -f latex -t docbook --wrap=none -s output.tex -o output.xml
 
 clean:
 	rm -f output.xml output.tex

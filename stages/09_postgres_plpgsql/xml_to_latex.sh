@@ -21,42 +21,48 @@ CREATE OR REPLACE FUNCTION xml_node_to_latex(n xml) RETURNS text LANGUAGE plpgsq
 DECLARE
     tag_name text;
     child_node xml;
-    child_text text;
+    child_str text;
+    inner_content text := '';
     res text := '';
 BEGIN
     tag_name := (xpath('name(/*)', n))[1]::text;
+
+    -- Collect rendered children (both element and text nodes in document order)
+    FOREACH child_node IN ARRAY xpath('/*/node()', n) LOOP
+        child_str := child_node::text;
+        IF child_str LIKE '<%>' THEN
+            inner_content := inner_content || xml_node_to_latex(child_str::xml);
+        ELSE
+            inner_content := inner_content || child_str;
+        END IF;
+    END LOOP;
+
     IF tag_name = 'article' THEN
-        res := '\documentclass{article}' || chr(10) || '\begin{document}' || chr(10);
-        FOREACH child_node IN ARRAY xpath('/*/*', n) LOOP
-            res := res || xml_node_to_latex(child_node);
-        END LOOP;
-        res := res || '\end{document}' || chr(10);
+        res := '\documentclass{article}' || chr(10) || '\begin{document}' || chr(10) || inner_content || '\end{document}' || chr(10);
     ELSIF tag_name = 'h1' THEN
-        child_text := (xpath('string(/*)', n))[1]::text;
-        res := '\section{' || child_text || '}' || chr(10) || chr(10);
+        res := '\section{' || inner_content || '}' || chr(10) || chr(10);
+    ELSIF tag_name = 'h2' THEN
+        res := '\subsection{' || inner_content || '}' || chr(10) || chr(10);
+    ELSIF tag_name = 'h3' THEN
+        res := '\subsubsection{' || inner_content || '}' || chr(10) || chr(10);
     ELSIF tag_name = 'p' THEN
-        child_text := (xpath('string(/*)', n))[1]::text;
-        res := child_text || chr(10) || chr(10);
+        res := inner_content || chr(10) || chr(10);
+    ELSIF tag_name = 'strong' THEN
+        res := '\textbf{' || inner_content || '}';
+    ELSIF tag_name = 'em' THEN
+        res := '\textit{' || inner_content || '}';
+    ELSIF tag_name = 'code' THEN
+        res := '\texttt{' || inner_content || '}';
     ELSIF tag_name = 'ul' THEN
-        res := '\begin{itemize}' || chr(10);
-        FOREACH child_node IN ARRAY xpath('/*/*', n) LOOP
-            res := res || xml_node_to_latex(child_node);
-        END LOOP;
-        res := res || '\end{itemize}' || chr(10) || chr(10);
+        res := '\begin{itemize}' || chr(10) || inner_content || '\end{itemize}' || chr(10) || chr(10);
     ELSIF tag_name = 'li' THEN
-        child_text := (xpath('string(/*)', n))[1]::text;
-        res := '\item ' || child_text || chr(10);
+        res := '\item ' || inner_content || chr(10);
     ELSIF tag_name = 'blockquote' THEN
-        res := '\begin{quote}' || chr(10);
-        FOREACH child_node IN ARRAY xpath('/*/*', n) LOOP
-            res := res || xml_node_to_latex(child_node);
-        END LOOP;
-        res := res || '\end{quote}' || chr(10) || chr(10);
+        res := '\begin{quote}' || chr(10) || inner_content || '\end{quote}' || chr(10) || chr(10);
     ELSE
-        FOREACH child_node IN ARRAY xpath('/*/*', n) LOOP
-            res := res || xml_node_to_latex(child_node);
-        END LOOP;
+        res := inner_content;
     END IF;
+
     RETURN res;
 END;
 \$\$;

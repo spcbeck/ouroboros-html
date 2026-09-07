@@ -137,6 +137,8 @@ The test harness in `scripts/test_suite.py` exercises multiple distinct HTML5 pa
 | `02_multi_paragraph.html` | Sibling `<p>` paragraph nodes | PL/pgSQL recursive, Pandoc, DocBook XSLT |
 | `03_unordered_list.html` | Nested `<ul><li>...</li></ul>` structures | LaTeX `itemize` $\to$ DocBook `itemizedlist` $\to$ Pug |
 | `04_blockquote.html` | Semantic `<blockquote><p>...</p></blockquote>` | LaTeX `quote` $\to$ DocBook `blockquote` $\to$ Pug |
+| `05_subheadings.html` | Hierarchical `<h2>`, `<h3>` subheadings | LaTeX `\subsection`/`\subsubsection` $\to$ nested DocBook $\to$ Pug |
+| `06_inline_formatting.html` | Inline `<strong>`, `<em>`, `<code>` styling | Mixed AST $\to$ LaTeX `\textbf`/`\textit`/`\texttt` $\to$ DocBook $\to$ Pug |
 
 ---
 

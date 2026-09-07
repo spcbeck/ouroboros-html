@@ -12,31 +12,56 @@
 
   <xsl:template match="db:article">
     <xsl:text>article&#10;</xsl:text>
-    <xsl:choose>
-      <xsl:when test="db:section">
-        <xsl:apply-templates select="db:section"/>
-      </xsl:when>
-      <xsl:otherwise>
-        <xsl:apply-templates select="db:para | db:itemizedlist | db:blockquote"/>
-      </xsl:otherwise>
-    </xsl:choose>
+    <xsl:apply-templates select="db:section | db:para | db:itemizedlist | db:blockquote"/>
   </xsl:template>
 
   <xsl:template match="db:section">
     <xsl:apply-templates select="db:title"/>
-    <xsl:apply-templates select="db:para | db:itemizedlist | db:blockquote"/>
+    <xsl:apply-templates select="db:para | db:itemizedlist | db:blockquote | db:section"/>
   </xsl:template>
 
   <xsl:template match="db:title">
-    <xsl:text>  h1 </xsl:text>
-    <xsl:value-of select="normalize-space(.)"/>
+    <xsl:variable name="depth" select="count(ancestor::db:section)"/>
+    <xsl:choose>
+      <xsl:when test="$depth = 1">
+        <xsl:text>  h1 </xsl:text>
+      </xsl:when>
+      <xsl:when test="$depth = 2">
+        <xsl:text>  h2 </xsl:text>
+      </xsl:when>
+      <xsl:when test="$depth = 3">
+        <xsl:text>  h3 </xsl:text>
+      </xsl:when>
+      <xsl:otherwise>
+        <xsl:text>  h4 </xsl:text>
+      </xsl:otherwise>
+    </xsl:choose>
+    <xsl:apply-templates select="node()"/>
     <xsl:text>&#10;</xsl:text>
   </xsl:template>
 
   <xsl:template match="db:para">
-    <xsl:text>  p </xsl:text>
-    <xsl:value-of select="normalize-space(.)"/>
+    <xsl:text>  p.&#10;    </xsl:text>
+    <xsl:apply-templates select="node()"/>
     <xsl:text>&#10;</xsl:text>
+  </xsl:template>
+
+  <xsl:template match="db:emphasis[@role='strong' or @role='bold']">
+    <xsl:text>&lt;strong&gt;</xsl:text>
+    <xsl:apply-templates select="node()"/>
+    <xsl:text>&lt;/strong&gt;</xsl:text>
+  </xsl:template>
+
+  <xsl:template match="db:emphasis[not(@role) or @role='italic']">
+    <xsl:text>&lt;em&gt;</xsl:text>
+    <xsl:apply-templates select="node()"/>
+    <xsl:text>&lt;/em&gt;</xsl:text>
+  </xsl:template>
+
+  <xsl:template match="db:literal">
+    <xsl:text>&lt;code&gt;</xsl:text>
+    <xsl:apply-templates select="node()"/>
+    <xsl:text>&lt;/code&gt;</xsl:text>
   </xsl:template>
 
   <xsl:template match="db:itemizedlist">
@@ -45,16 +70,23 @@
   </xsl:template>
 
   <xsl:template match="db:listitem">
-    <xsl:text>    li </xsl:text>
-    <xsl:value-of select="normalize-space(.)"/>
+    <xsl:text>    li.&#10;      </xsl:text>
+    <xsl:choose>
+      <xsl:when test="db:para">
+        <xsl:apply-templates select="db:para/node()"/>
+      </xsl:when>
+      <xsl:otherwise>
+        <xsl:apply-templates select="node()"/>
+      </xsl:otherwise>
+    </xsl:choose>
     <xsl:text>&#10;</xsl:text>
   </xsl:template>
 
   <xsl:template match="db:blockquote">
     <xsl:text>  blockquote&#10;</xsl:text>
     <xsl:for-each select="db:para">
-      <xsl:text>    p </xsl:text>
-      <xsl:value-of select="normalize-space(.)"/>
+      <xsl:text>    p.&#10;      </xsl:text>
+      <xsl:apply-templates select="node()"/>
       <xsl:text>&#10;</xsl:text>
     </xsl:for-each>
   </xsl:template>
