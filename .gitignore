@@ -1,0 +1,30 @@
+# Build artifacts
+target/
+*.a
+*.h.gch
+*.wasm
+bridge
+*.o
+*.so
+*.dylib
+node_modules/
+
+# Go artifacts
+stage2/libstage2.h
+stage2/libstage2.a
+stages/02_go_carchive/libstage2.h
+stages/02_go_carchive/libstage2.a
+stages/02_go_carchive/bridge
+stages/02_go_carchive/component_templ.go
+stages/01_go_templ/component_templ.go
+stages/01_go_templ/component.templ
+
+# Generated outputs
+stages/02_go_carchive/wrapper.c
+stages/03_emcc_wasm/wrapper.c
+stages/03_emcc_wasm/stage3.wasm
+stages/04_rust_wasmtime/stage3.wasm
+stages/04_rust_wasmtime/output.txt
+
+# OS metadata
+.DS_Store

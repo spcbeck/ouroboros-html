@@ -1,0 +1,9 @@
+[package]
+name = "stage4_wasmtime"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+wasmtime = "25.0"
+wasmtime-wasi = "25.0"
+anyhow = "1.0"

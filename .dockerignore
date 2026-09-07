@@ -1,0 +1,7 @@
+.git
+target/
+node_modules/
+*.wasm
+*.a
+*.h
+bridge
