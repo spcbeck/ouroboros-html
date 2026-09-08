@@ -4,15 +4,29 @@ set -euo pipefail
 INPUT_XML="${1:-output.xml}"
 OUTPUT_TEX="${2:-output.tex}"
 
-# Ensure PostgreSQL service is active
-if ! su - postgres -c "pg_isready" >/dev/null 2>&1; then
-    service postgresql start >/dev/null 2>&1 || true
-fi
+# Execute psql using the appropriate connection method:
+# 1. Direct psql connection (macOS Homebrew, local user cluster, or explicit PG* env vars)
+# 2. su - postgres fallback (Debian/Ubuntu containers running as root)
+# 3. Direct psql fallback (surfacing standard connection diagnostics)
+execute_psql() {
+    if command -v psql >/dev/null 2>&1 && psql -q -t -A -c "SELECT 1;" >/dev/null 2>&1; then
+        psql -q -t -A
+    elif command -v su >/dev/null 2>&1 && id -u postgres >/dev/null 2>&1; then
+        if ! su - postgres -c "pg_isready" >/dev/null 2>&1; then
+            if command -v service >/dev/null 2>&1; then
+                service postgresql start >/dev/null 2>&1 || true
+            fi
+        fi
+        su - postgres -c "psql -q -t -A"
+    else
+        psql -q -t -A
+    fi
+}
 
 # Read XML content
 XML_CONTENT=$(cat "${INPUT_XML}")
 
-su - postgres -c "psql -q -t -A" << EOF > "${OUTPUT_TEX}"
+execute_psql << EOF > "${OUTPUT_TEX}"
 CREATE TEMPORARY TABLE IF NOT EXISTS xml_store (payload xml);
 DELETE FROM xml_store;
 INSERT INTO xml_store (payload) VALUES ('${XML_CONTENT}'::xml);

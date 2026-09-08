@@ -4,6 +4,8 @@ target/
 *.h.gch
 *.wasm
 bridge
+bf
+stages/06_brainfuck_runtime/bf
 *.o
 *.so
 *.dylib
