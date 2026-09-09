@@ -25,16 +25,16 @@ WHITE_ON_BLACK = "\033[40;37m"
 def print_bauhaus_banner():
     print(f"\n{BOLD}{WHITE_ON_BLACK}========================================================================{RESET}")
     print(f"{BOLD}  [OUROBOROS-HTML] COMPREHENSIVE FIXTURE SUITE & AST GENERALIZATION {RESET}")
-    print(f"{BOLD}  Bauhaus Modular Verification Harness across 16 Compiler Runtimes   {RESET}")
+    print(f"{BOLD}  Bauhaus Modular Verification Harness across 20 Compiler Runtimes   {RESET}")
     print(f"{BOLD}{WHITE_ON_BLACK}========================================================================{RESET}\n")
 
 def run_pipeline():
-    """Runs make all to execute stages 0-15."""
+    """Runs make all to execute stages 0-19."""
     res = subprocess.run(["make", "all"], capture_output=True, text=True)
     return res.returncode == 0, res.stdout, res.stderr
 
 def verify_dom(input_file, output_file):
-    """Executes Stage 15 deep JSDOM equivalence asserter."""
+    """Executes Stage 19 deep JSDOM equivalence asserter."""
     res = subprocess.run(
         ["node", "scripts/verify_dom.js", input_file, output_file],
         capture_output=True,
@@ -48,7 +48,7 @@ def main():
 
     fixtures_dir = os.path.join(root_dir, "fixtures")
     stage0_input = os.path.join(root_dir, "stages", "00_input", "input.html")
-    stage15_output = os.path.join(root_dir, "stages", "15_assertion", "output.html")
+    stage19_output = os.path.join(root_dir, "stages", "19_assertion", "output.html")
 
     fixture_files = sorted(glob.glob(os.path.join(fixtures_dir, "*.html")))
     if not fixture_files:
@@ -82,9 +82,9 @@ def main():
             continue
 
         # Verify deep DOM equality
-        dom_ok, d_out, d_err = verify_dom(stage0_input, stage15_output)
+        dom_ok, d_out, d_err = verify_dom(stage0_input, stage19_output)
         if dom_ok:
-            with open(stage15_output, "r", encoding="utf-8") as f:
+            with open(stage19_output, "r", encoding="utf-8") as f:
                 raw_output = f.read().strip()
             print(f"  {BLUE}[PASSED]{RESET} Deep DOM Equivalence Verified ({elapsed:.2f}s)")
             print(f"  Output:  {BLUE}{raw_output}{RESET}\n")

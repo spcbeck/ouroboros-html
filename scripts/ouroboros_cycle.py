@@ -2,8 +2,8 @@
 """
 ouroboros_cycle.py - Multi-Generation Ouroboros Engine
 
-Executes recursive generational cycles where the final HTML5 output of Stage 14
-is fed back into Stage 0 as the new input, executing the full 16-stage pipeline
+Executes recursive generational cycles where the final HTML5 output of Stage 18
+is fed back into Stage 0 as the new input, executing the full 20-stage pipeline
 for N generations to prove mathematical idempotency.
 """
 
@@ -31,13 +31,13 @@ def print_banner(cycles: int):
     print(f"{BOLD}{WHITE}║{RESET}  {BOLD}{RED}●{RESET} {BOLD}{YELLOW}▲{RESET} {BOLD}{BLUE}■{RESET}  {BOLD}{WHITE}OUROBOROS-HTML :: MULTI-GENERATION IDEMPOTENCY ENGINE{RESET}       {BOLD}{WHITE}║{RESET}")
     print(f"{BOLD}{WHITE}╠══════════════════════════════════════════════════════════════════════════╣{RESET}")
     print(f"{BOLD}{WHITE}║{RESET}  Target Generations: {BOLD}{YELLOW}{cycles}{RESET}                                                {BOLD}{WHITE}║{RESET}")
-    print(f"{BOLD}{WHITE}║{RESET}  Rule: Output[k-1] --> Input[k] across 16 compiler stages               {BOLD}{WHITE}║{RESET}")
+    print(f"{BOLD}{WHITE}║{RESET}  Rule: Output[k-1] --> Input[k] across 20 compiler stages               {BOLD}{WHITE}║{RESET}")
     print(f"{BOLD}{WHITE}╚══════════════════════════════════════════════════════════════════════════╝{RESET}\n")
 
 
 def print_generation_header(gen: int, total: int):
     print(f"{BOLD}{BLUE}┌──────────────────────────────────────────────────────────────────────────┐{RESET}")
-    print(f"{BOLD}{BLUE}│{RESET}  {BOLD}{WHITE}GENERATION {gen:02d} / {total:02d}{RESET}  {DIM}--> Initiating full 16-stage compilation cycle{RESET}      {BOLD}{BLUE}│{RESET}")
+    print(f"{BOLD}{BLUE}│{RESET}  {BOLD}{WHITE}GENERATION {gen:02d} / {total:02d}{RESET}  {DIM}--> Initiating full 20-stage compilation cycle{RESET}      {BOLD}{BLUE}│{RESET}")
     print(f"{BOLD}{BLUE}└──────────────────────────────────────────────────────────────────────────┘{RESET}")
 
 
@@ -55,7 +55,7 @@ def main():
 
     root_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
     input_file = os.path.join(root_dir, "stages", "00_input", "input.html")
-    output_file = os.path.join(root_dir, "stages", "14_posthtml_minify", "output.html")
+    output_file = os.path.join(root_dir, "stages", "18_posthtml_minify", "output.html")
     verify_script = os.path.join(root_dir, "scripts", "verify_dom.js")
     artifacts_dir = os.path.join(root_dir, "artifacts")
 
@@ -144,8 +144,8 @@ def main():
     print(f"{BOLD}{GREEN}║{RESET}  Status:       {BOLD}{GREEN}PROVEN LOSSLESS & IDEMPOTENT{RESET}                             {BOLD}{GREEN}║{RESET}")
     print(f"{BOLD}{GREEN}║{RESET}  Cycles:       {BOLD}{WHITE}{cycles}{RESET} complete recursive generations                            {BOLD}{GREEN}║{RESET}")
     print(f"{BOLD}{GREEN}║{RESET}  Total Time:   {BOLD}{WHITE}{total_time:.2f}s{RESET}                                                     {BOLD}{GREEN}║{RESET}")
-    print(f"{BOLD}{GREEN}║{RESET}  Stages / Gen: {BOLD}{WHITE}16 distinct parsers, compilers & runtimes{RESET}                 {BOLD}{GREEN}║{RESET}")
-    print(f"{BOLD}{GREEN}║{RESET}  Total Passes: {BOLD}{WHITE}{cycles * 16}{RESET} compiled transformations                                  {BOLD}{GREEN}║{RESET}")
+    print(f"{BOLD}{GREEN}║{RESET}  Stages / Gen: {BOLD}{WHITE}20 distinct parsers, compilers & runtimes{RESET}                 {BOLD}{GREEN}║{RESET}")
+    print(f"{BOLD}{GREEN}║{RESET}  Total Passes: {BOLD}{WHITE}{cycles * 20}{RESET} compiled transformations                                  {BOLD}{GREEN}║{RESET}")
     print(f"{BOLD}{GREEN}║{RESET}  Invariant:    ∀ k ∈ [1..{cycles}], DOM(Pipeline^k(S0)) ≡ DOM(S0)             {BOLD}{GREEN}║{RESET}")
     print(f"{BOLD}{GREEN}╚══════════════════════════════════════════════════════════════════════════╝{RESET}\n")
 

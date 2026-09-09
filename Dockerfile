@@ -75,6 +75,13 @@ ENV PATH="/opt/emsdk/upstream/emscripten:${PATH}"
 # Initialize emscripten cache
 RUN emcc --version
 
+# Install PHP CLI, PHP XML (DOM), and Python Jinja2 for expanded templating stages
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    php-cli \
+    php-xml \
+    python3-jinja2 \
+    && rm -rf /var/lib/apt/lists/*
+
 # Pre-install Node.js dependencies into system location to ensure
 # modules resolve reliably even when /workspace is mounted without node_modules
 WORKDIR /opt/node_app
@@ -88,8 +95,8 @@ WORKDIR /workspace
 COPY . /workspace
 
 # Pre-fetch Go and Rust toolchain packages for offline self-containment
-RUN cd stages/01_go_templ && go mod download
-RUN cd stages/02_go_carchive && go mod download
-RUN cd stages/04_rust_wasmtime && cargo fetch
+RUN cd stages/03_go_templ && go mod download
+RUN cd stages/04_go_carchive && go mod download
+RUN cd stages/06_rust_wasmtime && cargo fetch
 
 CMD ["make", "all"]

@@ -97,14 +97,14 @@ function main() {
   try {
     assertNodesEqual(root1, root2, 'article');
     console.log('\n================================================================');
-    console.log(' [STAGE 15 ASSERTION PASSED] DEEP DOM EQUIVALENCE VERIFIED!');
+    console.log(' [STAGE 19 ASSERTION PASSED] DEEP DOM EQUIVALENCE VERIFIED!');
     console.log('----------------------------------------------------------------');
     console.log(` Input DOM:  ${root1.outerHTML}`);
     console.log(` Output DOM: ${root2.outerHTML}`);
-    console.log(' Structural, Tag, Attribute, and Text Content identical across 16 stages.');
+    console.log(' Structural, Tag, Attribute, and Text Content identical across 20 stages.');
     console.log('================================================================\n');
   } catch (err) {
-    console.error('\n[STAGE 15 ASSERTION FAILED]', err.message);
+    console.error('\n[STAGE 19 ASSERTION FAILED]', err.message);
     console.error(`Input DOM:  ${root1.outerHTML}`);
     console.error(`Output DOM: ${root2.outerHTML}`);
     process.exit(1);
