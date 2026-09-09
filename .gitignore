@@ -5,28 +5,26 @@ target/
 *.wasm
 bridge
 bf
-stages/06_brainfuck_runtime/bf
+stages/08_brainfuck_runtime/bf
 *.o
 *.so
 *.dylib
 node_modules/
 
 # Go artifacts
-stage2/libstage2.h
-stage2/libstage2.a
-stages/02_go_carchive/libstage2.h
-stages/02_go_carchive/libstage2.a
-stages/02_go_carchive/bridge
-stages/02_go_carchive/component_templ.go
-stages/01_go_templ/component_templ.go
-stages/01_go_templ/component.templ
+stages/04_go_carchive/libstage2.h
+stages/04_go_carchive/libstage2.a
+stages/04_go_carchive/bridge
+stages/04_go_carchive/component_templ.go
+stages/03_go_templ/component_templ.go
+stages/03_go_templ/component.templ
 
 # Generated outputs
-stages/02_go_carchive/wrapper.c
-stages/03_emcc_wasm/wrapper.c
-stages/03_emcc_wasm/stage3.wasm
-stages/04_rust_wasmtime/stage3.wasm
-stages/04_rust_wasmtime/output.txt
+stages/04_go_carchive/wrapper.c
+stages/05_emcc_wasm/wrapper.c
+stages/05_emcc_wasm/stage3.wasm
+stages/06_rust_wasmtime/stage3.wasm
+stages/06_rust_wasmtime/output.txt
 stages/*/*.bf
 stages/*/*.js
 !stages/*/transform.js
@@ -34,10 +32,18 @@ stages/*/*.js
 !stages/*/harness.js
 !stages/*/serialize.js
 !stages/*/minify.js
+!stages/*/compile.js
 stages/*/*.jsx
 stages/*/*.xml
 stages/*/*.tex
+stages/*/*.org
 stages/*/*.pug
+stages/*/*.hbs
+stages/*/*.svelte
+stages/*/*.mjs
+!stages/*/compile.mjs
+stages/*/*.php
+!stages/*/render.php
 stages/*/*.html
 !stages/00_input/input.html
 stages/*/*.xhtml

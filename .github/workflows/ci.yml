@@ -34,7 +34,7 @@ jobs:
         run: |
           docker build -t ouroboros-html:latest -f Dockerfile .
 
-      - name: Run all 16 compiler stages (Stages 0-15)
+      - name: Run all 20 compiler stages (Stages 0-19)
         run: |
           docker run --rm -v "${{ github.workspace }}:/workspace" -w /workspace ouroboros-html:latest make all
 
